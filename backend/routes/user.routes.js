@@ -2,7 +2,7 @@ import { Router } from "express";
 import { createUser,loginUser,getProfile,verifyOTP } from "../controllers/user.controller.js";
 import { createEvent,getEvents,getMyEvents,getEventById,updateEvent,deleteEvent,addComment,getCommentsByEvent } from "../controllers/event.controller.js";
 import { registerInEvent } from "../controllers/join.event.controller.js";
-import { exportRegistrationCSV, getEventRegistrations } from "../controllers/admin.analytics.controller.js";
+import { exportRegistrationCSV, getEventRegistrations, getOverview } from "../controllers/admin.analytics.controller.js";
 import {authMiddleware, isRole} from "../middleware/protect.middleware.js";
 import { upload } from "../middleware/user.middleware.js";
 const router = Router();
@@ -22,6 +22,7 @@ router.get("/comments/:eventId", getCommentsByEvent);
 router.post("/verify-otp", verifyOTP);
 router.get("/myevents/:eventId/registrations",authMiddleware,isRole,getEventRegistrations);
 router.get("/myevents/:eventId/export-csv",authMiddleware,isRole,exportRegistrationCSV);
+router.get("/analytics/overview", authMiddleware, isRole, getOverview);
 
 
 export default router;

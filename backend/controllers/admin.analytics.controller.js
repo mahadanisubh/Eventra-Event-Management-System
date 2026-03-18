@@ -1,4 +1,5 @@
 import Event from "../models/event.model.js";
+import User from "../models/user.model.js";
 import { Parser } from "json2csv";
 
 export const getEventRegistrations = async (req, res) => {
@@ -71,3 +72,22 @@ export const exportRegistrationCSV = async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 };
+
+export const getOverview = async ( req, res) => {
+  try{
+    const totalEvents = await Event.countDocuments();
+    const totalUsers = await User.countDocuments();
+    const events = await Event.find({}, "registeredUsers");
+    let totalRegistrations = 0;
+    events.forEach(event => {
+      totalRegistrations += event.registeredUsers.length;
+    });
+     res.status(200).json({
+    totalEvents,
+    totalUsers,
+    totalRegistrations
+  })
+  }catch(err){
+    res.status(500).json({message: "Server error"})
+  }
+}

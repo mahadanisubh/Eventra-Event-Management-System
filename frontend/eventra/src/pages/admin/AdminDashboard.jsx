@@ -83,11 +83,14 @@ const AdminDashboard = () => {
       <div className="dashboard-header">
         <h1>Admin Dashboard</h1>
         <div className="admin-actions">
-          <Link className="btn primary" to="/createevent">
+          <Link className="btn" to="/createevent">
             Create Event
           </Link>
           <Link className="btn" to="/myevents">
             My Events
+          </Link>
+          <Link className="btn" to="/analytics">
+            Analytics
           </Link>
         </div>
       </div>

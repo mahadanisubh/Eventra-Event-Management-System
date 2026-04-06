@@ -13,6 +13,7 @@ import MyEvents from "./pages/admin/MyEvents.jsx";
 import AdminDashboard from "./pages/admin/AdminDashboard.jsx";
 import EditEvent from "./pages/admin/EditEvent.jsx";
 import VerifyOtp from "./pages/verifyOtp.jsx";
+import Analytics from "./pages/Analytics.jsx";
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
       <Route path="/createuser" element={<Register />}/>
       <Route path="/loginuser" element={<Login />}/>
       <Route path="/verify-otp" element={<VerifyOtp />} />
+      <Route path="/analytics" element= {<Analytics />} />
     </Routes>
     </>
   )

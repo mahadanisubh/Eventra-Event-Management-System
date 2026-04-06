@@ -1,11 +1,10 @@
 🎟️ Eventra – Event Management & Registration Platform
 
-Eventra is a full-stack event management platform where users can explore and register for events, and organizers can manage events with powerful tools like registration tracking, OTP login, CSV export, and analytics-ready architecture.
+Eventra is a full-stack event management platform where users can explore and register for events, and organizers can manage events with powerful tools like registration tracking, OTP based login, CSV export, and analytics-ready architecture. It supports secure paid events registrations.
 
-# Features
+# Features of the application
 
-
-1️. User Features
+1. User Features
 
 Browse upcoming events
 
@@ -19,13 +18,11 @@ OTP-based secure login (email verification)
 
 View registered events in profile
 
+Post comments and replies below every events
+
 2. Admin / Creator Features
 
-Create events
-
-Edit events
-
-Delete events
+Create,Edit,Delete events
 
 Upload event banner images
 
@@ -37,17 +34,24 @@ Track total registrations
 
 Manage event status (Upcoming / Completed / Cancelled)
 
-3️. Eventra Pro (Landing Promotion Section)
+Get Registration trend charts
+
+Registrations per day, per event, top events analytics
+
+Can create paid events also (Razorpay integration)
+
+3. Eventra Pro (Landing Promotion Section)
 
 Creator onboarding via Google Form
 
 Export attendee data
 
-Registration tracking
+Registration tracking 
+
 
 # Tech Stack
 
-1️. Frontend
+1. Frontend
 
 React (Vite)
 
@@ -57,7 +61,9 @@ Custom CSS (Responsive Design)
 
 Fetch API
 
-2️. Backend
+Recharts (for analytics)
+
+2. Backend
 
 Node.js
 
@@ -71,16 +77,12 @@ OTP Email Verification (Nodemailer)
 
 CSV Export
 
+Payment gateway integration (Razorpay)
+
 
 # Future Improvements
 
-Registration trend charts
-
-Registrations per day analytics
-
 Email broadcast to event attendees
-
-Payment gateway for events with entry fees
 
 Real-time notifications
 

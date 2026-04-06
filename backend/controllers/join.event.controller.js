@@ -1,32 +1,52 @@
 import Event from "../models/event.model.js";
 import User from "../models/user.model.js";
 
+export const registerInEventLogic = async ({ userId, eventId }) => {
+  const event = await Event.findById(eventId);
+  if (!event) {
+    throw new Error("No Event Found");
+  }
+
+  const alreadyRegistered = event.registeredUsers.some(
+    (registration) => registration.user.toString() === userId.toString()
+  );
+
+  if (alreadyRegistered) {
+    throw new Error("Already registered");
+  }
+
+  if (event.availableSeats !== undefined && event.availableSeats <= 0) {
+    throw new Error("No seats available");
+  }
+
+  event.registeredUsers.push({
+    user: userId,
+    registeredAt: new Date(),
+  });
+
+  if (event.availableSeats !== undefined) {
+    event.availableSeats -= 1;
+  }
+
+  await event.save();
+
+  await User.findByIdAndUpdate(userId, {
+    $addToSet: { registeredEvents: event._id },
+  });
+
+  return event;
+};
+
 export const registerInEvent = async (req, res) => {
   try {
-    const event = await Event.findById(req.params.eventId);
-    if (!event) {
-      return res.status(404).json({ message: "No Event Found" });
-    }
-
-    const userId = req.user._id;
-    const alreadyRegistered = event.registeredUsers.some(
-      (registration) => registration.user.toString() === userId.toString(),
-    );
-    if (alreadyRegistered) {
-      return res.status(400).json({ message: "Already registered" });
-    }
-    event.registeredUsers.push({
-      user: userId,
-      registeredAt: new Date(),
+    const event = await registerInEventLogic({
+      userId: req.user._id,
+      eventId: req.params.eventId,
     });
-    await event.save();
 
-    await User.findByIdAndUpdate(req.user._id, {
-      $addToSet: { registeredEvents: event._id },
-    });
-    res.status(201).json({ message: "Sucessfully Registered", event });
+    res.status(201).json({ message: "Successfully Registered", event });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ message: "Server error" });
+    res.status(400).json({ message: err.message || "Registration failed" });
   }
 };

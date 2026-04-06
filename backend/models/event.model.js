@@ -39,6 +39,21 @@ const eventSchema = mongoose.Schema({
     enum: ["upcoming", "completed", "cancelled"],
     default: "upcoming",
   },
+  paymentType: {
+    type: String,
+    enum: ["free", "paid"],
+    default: "free",
+  },
+  price: {
+    type: Number,
+    default: 0,
+    min: 0
+  },
+  availableSeats: {
+    type: Number,
+    default: 0,
+    min: 0
+  },
   registeredUsers: [
     {
       user: {

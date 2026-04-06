@@ -16,19 +16,19 @@ const Home = () => {
       setLoading(true);
 
       const res = await fetch(
-        `${BASE_URL}/getEvents?page=${pageNumber}&limit=10&title=${query}`,
+        `${BASE_URL}/getevents?page=${pageNumber}&limit=10&title=${query}`,
       );
-
       const data = await res.json();
-
       if (!res.ok) {
         throw new Error(data.message || "Failed to fetch events");
       }
+      
 
       setEvents(data.events || []);
       setTotalPages(data.totalPages || 1);
       setPage(data.currentPage || 1);
     } catch (err) {
+      console.log(err)
       setError(err.message);
     } finally {
       setLoading(false);

@@ -1,3 +1,4 @@
+import { format } from "path";
 import Event from "../models/event.model.js";
 import User from "../models/user.model.js";
 import { Parser } from "json2csv";
@@ -90,4 +91,71 @@ export const getOverview = async ( req, res) => {
   }catch(err){
     res.status(500).json({message: "Server error"})
   }
+}
+
+export const getEventStats = async (req, res) => {
+  try{
+    const stats = await Event.aggregate([
+      {
+        $project : {
+          title: 1,
+          totalRegistrations: {$size : "$registeredUsers"}
+        }
+      }
+    ]);
+    res.status(200).json(stats);
+  }
+  catch(err){
+    res.status(500).json({message: "Server error"})
+  }
+}
+
+export const getTopEvents = async (req, res) => {
+  try{
+    const topEvents = await Event.aggregate([
+      {
+        $project : {
+          title: 1,
+          totalRegistrations: {$size : "$registeredUsers"}
+        }
+      },
+      {
+        $sort : { totalRegistrations: -1 }
+      },
+      {
+        $limit : 5
+      }
+    ])
+    res.status(200).json(topEvents)
+  }
+  catch(err){
+    res.status(500).json({message: "Server error"})
+  }
+}
+
+export const getDailyRegistration = async (req, res) => {
+  try{
+   const data = await Event.aggregate([
+    {$unwind: "$registeredUsers"},
+    {
+      $group : {
+        _id : {
+          $dateToString : {
+            format: "%Y-%m-%d",
+            date: "$registeredUsers.registeredAt"
+          }
+        },
+        total: {$sum: 1},
+      },
+    },
+    {
+      $sort : {_id : 1},
+    }
+   ]);
+   res.status(200).json(data);
+}
+catch(err){
+  console.log(err);
+  res.status(500).json({message: "Server error"})
+}
 }

@@ -88,6 +88,67 @@ const EventDetails = () => {
     return () => clearInterval(timer);
   }, [event]);
 
+  const handlePaidRegistration = async (eventId) => {
+  try {
+    const token = localStorage.getItem("token");
+
+    const orderRes = await fetch(`${BASE_URL}/payments/create-order`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ eventId }),
+    });
+
+    const orderData = await orderRes.json();
+
+    if (!orderRes.ok) {
+      throw new Error(orderData.message || "Failed to create payment order");
+    }
+
+    const options = {
+      key: orderData.key,
+      amount: orderData.amount,
+      currency: orderData.currency,
+      name: "Eventra",
+      description: `Registration for ${orderData.eventTitle}`,
+      order_id: orderData.orderId,
+      handler: async function (response) {
+        const verifyRes = await fetch(`${BASE_URL}/payments/verify`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            ...response,
+            paymentId: orderData.paymentId,
+          }),
+        });
+
+        const verifyData = await verifyRes.json();
+
+        if (!verifyRes.ok) {
+          throw new Error(verifyData.message || "Payment verification failed");
+        }
+        setIsRegistered(true);
+        alert("Payment successful and registration confirmed");
+        fetchEvent();
+      },
+      theme: {
+        color: "#3399cc",
+      },
+    };
+
+    const razorpay = new window.Razorpay(options);
+    razorpay.open();
+  } catch (err) {
+    console.log(err);
+    alert(err.message);
+  }
+};
+
   const handleRegister = async () => {
     if (!token) {
       nav("/loginuser");
@@ -95,15 +156,14 @@ const EventDetails = () => {
     }
 
     try {
-      const res = await fetch(`${BASE_URL}/registerInEvent/${eventId}`, {
+      if (event.paymentType === "free" || event.price === 0) {
+      await fetch(`${BASE_URL}/registerInEvent/${eventId}`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-
-      const text = await res.text();
-      const data = text ? JSON.parse(text) : {};
+      const data = await res.json();
 
       if (!res.ok) {
         throw new Error(data.message || "Registration failed");
@@ -111,6 +171,20 @@ const EventDetails = () => {
 
       setIsRegistered(true);
       alert("Successfully registered!");
+      fetchEvent();
+    }
+    else{
+      await handlePaidRegistration(eventId);
+    }
+      // const text = await res.text();
+      // const data = text ? JSON.parse(text) : {};
+
+      // if (!res.ok) {
+      //   throw new Error(data.message || "Registration failed");
+      // }
+
+      // setIsRegistered(true);
+      // alert("Successfully registered!");
     } catch (err) {
       alert(err.message);
     }

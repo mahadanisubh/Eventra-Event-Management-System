@@ -3,9 +3,10 @@ dotenv.config();
 import express from "express"
 import connectDB from "../config/connectDB.js";
 import router from "../routes/user.routes.js";
+import paymentRouter from "../routes/payment.routes.js";
 import cors from 'cors';
 const app = express();
-const port = 3000
+const port = 3000;
 app.use(cors({
     origin: "http://localhost:5173",
     credentials: true
@@ -13,6 +14,8 @@ app.use(cors({
 app.use(express.json())
 
 app.use("/",router)
+app.use("/",paymentRouter)
+
 const startServer = async () =>{
     try{
     await connectDB();

@@ -119,6 +119,29 @@ const CreateEvent = () => {
           required
         />
 
+        <select name="paymentType" value={form.paymentType} onChange={handleChange}>
+          <option value="free">Free</option>
+          <option value="paid">paid</option>
+        </select>
+
+        <input
+          type="text"
+          name="price"
+          placeholder="Event Price"
+          value={form.price}
+          onChange={handleChange}
+          required
+        />
+
+        <input
+          type="text"
+          name="availableSeats"
+          placeholder="Available Seats"
+          value={form.availableSeats}
+          onChange={handleChange}
+          required
+        />
+
         <input
           type="file"
           accept="image/* , video/mp4, video/webm"

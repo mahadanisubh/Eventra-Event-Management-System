@@ -1,4 +1,4 @@
-🎟️ Eventra – Event Management & Registration Platform
+🎟️ Eventra – Event Management Platform
 
 Eventra is a full-stack event management platform where users can explore and register for events, and organizers can manage events with powerful tools like registration tracking, OTP based login, CSV export, and analytics-ready architecture. It supports secure paid events registrations.
 

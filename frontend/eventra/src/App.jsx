@@ -12,7 +12,7 @@ import CreateEvent from "./pages/admin/CreateEvent.jsx";
 import MyEvents from "./pages/admin/MyEvents.jsx";
 import AdminDashboard from "./pages/admin/AdminDashboard.jsx";
 import EditEvent from "./pages/admin/EditEvent.jsx";
-import VerifyOtp from "./pages/verifyOtp.jsx";
+import VerifyOtp from "./pages/VerifyOtp.jsx";
 import Analytics from "./pages/Analytics.jsx";
 
 function App() {

@@ -6,7 +6,7 @@ import router from "../routes/user.routes.js";
 import paymentRouter from "../routes/payment.routes.js";
 import cors from 'cors';
 const app = express();
-const port = 3000;
+const PORT = process.env.PORT || 3000;
 app.use(cors({
     origin: "http://localhost:5173",
     credentials: true
@@ -19,8 +19,8 @@ app.use("/",paymentRouter)
 const startServer = async () =>{
     try{
     await connectDB();
-app.listen(port,() =>{
-    console.log("Connected to Port",port);
+app.listen(PORT,() =>{
+    console.log("Connected to Port",PORT);
 })
 }
 catch(err){

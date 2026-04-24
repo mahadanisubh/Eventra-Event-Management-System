@@ -8,7 +8,7 @@ import cors from 'cors';
 const app = express();
 const PORT = process.env.PORT || 3000;
 app.use(cors({
-    origin: "*",
+    origin: "https://eventra-app1.onrender.com",
     credentials: true
 }))
 app.use(express.json())

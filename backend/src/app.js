@@ -8,11 +8,7 @@ import cors from 'cors';
 const app = express();
 const PORT = process.env.PORT || 3000;
 app.use(cors({
-    origin: [
-        "https://eventra-app1.onrender.com",
-        process.env.FRONTEND_URL || "http://localhost:3000",
-        /\.amplifyapp\.com$/  // Allow all Amplify URLs
-    ],
+    origin: "https://eventra-app1.onrender.com",
     credentials: true
 }))
 app.use(express.json())

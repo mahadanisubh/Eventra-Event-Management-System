@@ -8,13 +8,7 @@ import cors from 'cors';
 const app = express();
 const PORT = process.env.PORT || 3000;
 app.use(cors({
-    origin: [
-        "https://eventra-app1.onrender.com",
-        "https://taupe-marzipan-8fb20d.netlify.app",
-        "https://eventra-app.duckdns.org",
-        "http://localhost:3000",
-        "http://localhost:5173"
-    ],
+    origin: "*"
     credentials: true
 }))
 app.use(express.json())

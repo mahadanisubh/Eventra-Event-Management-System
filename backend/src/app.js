@@ -10,8 +10,8 @@ const PORT = process.env.PORT || 3000;
 app.use(cors({
     origin: [
         "https://eventra-app1.onrender.com",
-        "http://localhost:5173",  // For local development
-        process.env.FRONTEND_URL || "https://eventra-app1.onrender.com"
+        process.env.FRONTEND_URL || "http://localhost:3000",
+        /\.amplifyapp\.com$/  // Allow all Amplify URLs
     ],
     credentials: true
 }))

@@ -1,3 +1,3 @@
-const BASE_URL = "http://13.127.2.117:3000";
+const BASE_URL = "https://eventra-app.duckdns.org";
 
 export default BASE_URL;

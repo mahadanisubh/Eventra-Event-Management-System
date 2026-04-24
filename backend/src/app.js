@@ -8,7 +8,7 @@ import cors from 'cors';
 const app = express();
 const PORT = process.env.PORT || 3000;
 app.use(cors({
-    origin: "https://magenta-tanuki-9c7b14.netlify.app",
+    origin: "https://eventra-app.netlify.app",
     credentials: true
 }))
 app.use(express.json())
